@@ -1,33 +1,54 @@
-// const obj1 = {
-//     a:'a',
-//     b:'b',
-//     c: {
-//         d:'d',
-//         e:'e',
-//     }
-// }
-
-// const sringifiedComplexObje= JSON.stringify(obj1) //Funciona simpre y cuando no usemos metodos
-// const obj2 = JSON.parse(sringifiedComplexObje)
-
-function recursiva(numbersArray)
-{
-    if(numbersArray.length !=0)
-    {
-        const firstNum=numbersArray[0];
-        console.log(firstNum)
-        numbersArray.shift(); //Elimina el primer elemento del array
-        return recursiva(numbersArray);
+function isObject(subject) {
+    return typeof subject == "object";
+  }
+  
+  function isArray(subject) {
+    return Array.isArray(subject);
+  }
+  
+  function deepCopy(subject) {
+    let copySubject;
+  
+    const subjectIsObject = isObject(subject);
+    const subjectIsArray = isArray(subject);
+  
+    if (subjectIsArray) {
+      copySubject = [];
+    } else if (subjectIsObject) {
+      copySubject = {};
+    } else {
+      return subject;
     }
-    
-}
-
-const numeritos=[0,1,2,3,4,5,6,7,8,9]
-recursiva(numeritos)
-// let num=0
-
-// for(let index=0;index<numeritos.length;index++)
-// {   
-//     var numerito = numeritos[index];
-//     console.log({index,numerito});
-// }
+  
+    for (key in subject) {
+      const keyIsObject = isObject(subject[key]);
+  
+      if (keyIsObject) {
+        copySubject[key] = deepCopy(subject[key]);
+      } else {
+        if (subjectIsArray) {
+          copySubject.push(subject[key]);
+        } else {
+          copySubject[key] = subject[key];
+        }
+      }
+    }
+  
+    return copySubject;
+  }
+  
+  const studentBase = {
+    name: undefined,
+    email: undefined,
+    age: undefined,
+    approvedCourses: undefined,
+    learningPaths: undefined,
+    socialMedia: {
+      twitter: undefined,
+      instagram: undefined,
+      facebook: undefined,
+    },
+  };
+  
+  const juan = deepCopy(studentBase);
+  Object.seal(juan);
