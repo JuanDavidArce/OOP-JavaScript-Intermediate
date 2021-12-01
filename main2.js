@@ -7,12 +7,5 @@ const obj1 = {
     }
 }
 
-const obj2= {};
-
-for (prop in obj1)
-{
-    obj2[prop]=obj1[prop];
-}
-
-const obj3 = Object.assign({},obj1);
-const obj3 = Object.create(obj1); // No apunta a la misma direccion de memoria
+const sringifiedComplexObje= JSON.stringify(obj1) //Funciona simpre y cuando no usemos metodos
+const obj2 = JSON.parse(sringifiedComplexObje)
