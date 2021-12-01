@@ -51,7 +51,7 @@ function isObject(subject) {
     facebook,
     approvedCourses = [],
     learningPaths = [],
-  }) {
+  }={}) {
     return {
       name,
       email,
