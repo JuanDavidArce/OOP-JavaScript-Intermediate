@@ -2,11 +2,11 @@ function isObject(subject) {
     return typeof subject == "object";
   }
   
-function isArray(subject) {
+  function isArray(subject) {
     return Array.isArray(subject);
   }
   
-function deepCopy(subject) {
+  function deepCopy(subject) {
     let copySubject;
   
     const subjectIsObject = isObject(subject);
@@ -38,20 +38,42 @@ function deepCopy(subject) {
   }
   
   
-function requiredParam(param) {
+  function requiredParam(param) {
     throw new Error(param + " es obligatorio");
   }
   
-function LearningPath({
+  function LearningPath({
     name = requiredParam("name"),
     courses = [],
   }) {
     this.name = name;
     this.courses = courses;
-
+  
+    // const private = {
+    //   "_name": name,
+    //   "_courses": courses,
+    // };
+  
+    // const public = {
+    //   get name() {
+    //     return private["_name"];
+    //   },
+    //   set name(newName) {
+    //     if (newName.length != 0) {
+    //       private["_name"] = newName;
+    //     } else {
+    //       console.warn("Tu nombre debe tener al menos 1 caracter");
+    //     }
+    //   },
+    //   get courses() {
+    //     return private["_courses"];
+    //   },
+    // };
+  
+    // return public;
   }
   
-function Student({
+  function Student({
     name = requiredParam("name"),
     email = requiredParam("email"),
     age,
@@ -71,17 +93,28 @@ function Student({
       facebook,
     };
   
-    if (isArray(learningPaths)) {
-      this.learningPaths = [];
-      
-      for (learningPathIndex in learningPaths) {
-        if (learningPaths[learningPathIndex] instanceof LearningPath) {
-          this.learningPaths.push(learningPaths[learningPathIndex]);
+    const private = {
+      "_learningPaths": [],
+    };
+  
+    Object.defineProperty(this, "learningPaths", {
+      get() {
+        return private["_learningPaths"];
+      },
+      set(newLp) {
+        if (newLp instanceof LearningPath) {
+          private["_learningPaths"].push(newLp);
+        } else {
+          console.warn("Alguno de los LPs no es una instancia dell prototipo LearningPath");
         }
-      }
+      },
+    });
+  
+    for (learningPathIndex in learningPaths) {
+      this.learningPaths = learningPaths[learningPathIndex];
     }
-
   }
+  
   
   const escuelaWeb = new LearningPath({ name: "Escuela de WebDev" });
   const escuelaData = new LearningPath({ name: "Escuela de Data Science" });
