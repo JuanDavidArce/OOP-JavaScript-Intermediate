@@ -37,6 +37,18 @@ function isObject(subject) {
     return copySubject;
   }
   
+  // const studentBase = {
+  //   name: undefined,
+  //   email: undefined,
+  //   age: undefined,
+  //   approvedCourses: undefined,
+  //   learningPaths: undefined,
+  //   socialMedia: {
+  //     twitter: undefined,
+  //     instagram: undefined,
+  //     facebook: undefined,
+  //   },
+  // };
   
   function requiredParam(param) {
     throw new Error(param + " es obligatorio");
@@ -51,9 +63,12 @@ function isObject(subject) {
     facebook,
     approvedCourses = [],
     learningPaths = [],
-  }={}) {
-    return {
-      name,
+  } = {}) {
+    const private = {
+      "_name": name,
+    };
+  
+    const public = {
       email,
       age,
       approvedCourses,
@@ -63,7 +78,35 @@ function isObject(subject) {
         instagram,
         facebook,
       },
+      get name() {
+        return private["_name"];
+      },
+      set name(newName) {
+        if (newName.length != 0) {
+          private["_name"] = newName;
+        } else {
+          console.warn("Tu nombre debe tener al menos 1 caracter");
+        }
+      },
+      // readName() {
+      //   return private["_name"];
+      // },
+      // changeName(newName) {
+      //   private["_name"] = newName;
+      // },
     };
+  
+    // Object.defineProperty(public, "readName", {
+    //   writable: false,
+    //   configurable: false,
+    // });
+    // Object.defineProperty(public, "changeName", {
+    //   writable: false,
+    //   configurable: false,
+    // });
+  
+    return public;
   }
   
   const juan = createStudent({ email: "juanito@frijoles.co", name: "Juanito" });
+  
