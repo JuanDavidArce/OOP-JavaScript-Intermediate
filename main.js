@@ -14,12 +14,40 @@ const juan =
 // console.log(Object.getOwnPropertyNames(juan));
 // console.log(Object.entries(juan));
 
+
+// Object.defineProperty(juan,'Navigator',{
+//     value:'Chrome',
+//     enumerable:false,
+//     writable:true,
+//     configurable:true
+    
+// })
+
+// Object.defineProperty(juan,'Editor',{
+//     value:'VsCode',
+//     enumerable:true,
+//     writable:false,
+//     configurable:true
+    
+// })
+
+// Object.defineProperty(juan,'Prueba Nasa',{
+//     value:'Extraterrestres',
+//     enumerable:false,
+//     writable:false,
+//     configurable:false
+    
+// })
+
+// Object.defineProperty(juan,'Terminal',{
+//     value:'WSL',
+//     enumerable:true,
+//     writable:true,
+//     configurable:false
+    
+// })
+Object.seal(juan);
+Object.freeze(juan);
+
+
 console.log(Object.getOwnPropertyDescriptors(juan));
-
-Object.defineProperty(juan,"prueba de la nasa",{
-    value:'Extraterrestres',
-    enumerable:true,
-    writable:true,
-    configurable:true
-
-})
